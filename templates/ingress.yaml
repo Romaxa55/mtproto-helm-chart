@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "mtproto-proxy.fullname" . }}
+  annotations:
+    {{- if .Values.ingress.annotations }}
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    {{- end }}
+spec:
+  ingressClassName: nginx  # Replace 'nginx' with your actual Ingress class if needed
+  rules:
+    {{- .Values.ingress.hosts | toYaml | nindent 2 }} 

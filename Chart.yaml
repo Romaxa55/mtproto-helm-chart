@@ -1,0 +1,8 @@
+apiVersion: v2
+name: mtproto-proxy
+description: A Helm chart for deploying MTProto proxy in Kubernetes
+version: 0.1.0
+keywords:
+  - mtproto
+  - proxy
+  - telegram 
