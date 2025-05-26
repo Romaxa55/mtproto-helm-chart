@@ -13,4 +13,17 @@ spec:
     {{- toYaml .Values.ingress.tls | nindent 4 }}
     {{- end }}
   rules:
-    {{- .Values.ingress.hosts | toYaml | nindent 2 }} 
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ include "mtproto-proxy.fullname" $ }}
+                port:
+                  number: {{ $.Values.service.port }}
+          {{- end }}
+    {{- end }} 

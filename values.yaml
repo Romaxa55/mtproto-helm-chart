@@ -48,7 +48,7 @@ tolerations: []
 
 # Environment variables for MTProto proxy configuration
 env:
-  SECRET: ""  # Set to your custom secret, e.g., '935ddceb2f6bbbb78363b224099f75c8,2084c7e58d8213296a3206da70356c81' for multiple secrets
+  SECRET: "935ddceb2f6bbbb78363b224099f75c8,2084c7e58d8213296a3206da70356c81"  # Set to your custom secret, e.g., '935ddceb2f6bbbb78363b224099f75c8,2084c7e58d8213296a3206da70356c81' for multiple secrets
   TAG: ""  # Set to your custom tag, e.g., '3f40462915a3e6026a4d790127b95ded'
   WORKERS: 2  # Default to 2, adjust based on your CPU, e.g., 16 for more workers
   SECRET_COUNT: 1  # Default to 1, set to e.g., 4 for auto-generating multiple secrets
