@@ -1,11 +1,11 @@
 # Default values for mtproto-proxy
 # This file contains values that can be overridden during helm install
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: telegrammessenger/proxy
-  tag: latest
+  tag: 1.4
   pullPolicy: IfNotPresent
 
 service:
@@ -15,13 +15,15 @@ service:
 ingress:
   enabled: true
   annotations:
-    # Add annotations for external proxying, e.g., for Warp WG or other proxies
-    # Uncomment and customize as needed for your environment
-    # kubernetes.io/ingress.class: nginx
-    # nginx.ingress.kubernetes.io/configuration-snippet: |-
-    #   proxy_set_header X-Forwarded-Proto $scheme;
+    cert-manager.io/cluster-issuer: cloudflare-issuer  # Update this once your Cloudflare issuer is created
+    # Optionally, add more annotations like:
+    # cert-manager.io/acme-challenge-type: dns01
+  tls:
+    - secretName: mtproto-proxy-tls
+      hosts:
+        - tg.rubystay.vn
   hosts:
-    - host: mtproto-proxy.example.com
+    - host: tg.rubystay.vn
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -42,4 +44,11 @@ nodeSelector: {}
 
 affinity: {}
 
-tolerations: [] 
+tolerations: []
+
+# Environment variables for MTProto proxy configuration
+env:
+  SECRET: ""  # Set to your custom secret, e.g., '935ddceb2f6bbbb78363b224099f75c8,2084c7e58d8213296a3206da70356c81' for multiple secrets
+  TAG: ""  # Set to your custom tag, e.g., '3f40462915a3e6026a4d790127b95ded'
+  WORKERS: 2  # Default to 2, adjust based on your CPU, e.g., 16 for more workers
+  SECRET_COUNT: 1  # Default to 1, set to e.g., 4 for auto-generating multiple secrets

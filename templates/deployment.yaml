@@ -22,9 +22,20 @@ spec:
             - name: http
               containerPort: 443
               protocol: TCP
-          volumeMounts:
-            - name: data
-              mountPath: /data
-      volumes:
-        - name: data
-          emptyDir: {}  # In production, replace with persistentVolumeClaim if needed 
+          env:
+            {{- if .Values.env.SECRET }}
+            - name: SECRET
+              value: {{ .Values.env.SECRET }}
+            {{- end }}
+            {{- if .Values.env.TAG }}
+            - name: TAG
+              value: {{ .Values.env.TAG }}
+            {{- end }}
+            {{- if .Values.env.WORKERS }}
+            - name: WORKERS
+              value: {{ .Values.env.WORKERS | quote }}
+            {{- end }}
+            {{- if .Values.env.SECRET_COUNT }}
+            - name: SECRET_COUNT
+              value: {{ .Values.env.SECRET_COUNT | quote }}
+            {{- end }}
